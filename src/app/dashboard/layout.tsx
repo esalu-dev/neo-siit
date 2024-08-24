@@ -30,7 +30,7 @@ export default function RootLayout ({
   children: React.ReactNode
 }>) {
   return (
-    <div className='flex h-screen bg-gray-100 dark:bg-gray-900'>
+    <div className='flex min-h-screen bg-gray-100 dark:bg-gray-900'>
       {/* Sidebar */}
       <aside className='hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700'>
         <div className='flex items-center justify-center h-16 border-b dark:border-gray-700'>
