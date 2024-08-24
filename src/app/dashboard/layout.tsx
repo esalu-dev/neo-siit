@@ -1,4 +1,13 @@
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTrigger
+} from '@/components/ui/sheet'
 import {
   LayoutDashboard,
   Calendar,
@@ -64,9 +73,61 @@ export default function RootLayout ({
       <div className='flex-1 flex flex-col overflow-hidden'>
         <header className='flex items-center max-h-16 justify-between px-6 py-4 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
           <div className='flex items-center'>
-            <Button variant='ghost' size='icon' className='md:hidden mr-2'>
-              <Menu className='h-6 w-6' />
-            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant='ghost' size='icon' className='md:hidden mr-2'>
+                  <Menu className='h-6 w-6' />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side={'left'}>
+                <SheetHeader>
+                  <span className='text-xl font-semibold text-left'>
+                    NeoSIIT
+                  </span>
+                </SheetHeader>
+                <SheetDescription>
+                  Sistema Integral de Información
+                </SheetDescription>
+                <nav className='flex flex-col space-y-2 py-4'>
+                  <SheetClose asChild>
+                    <Link
+                      href={'/dashboard'}
+                      className={buttonVariants({
+                        variant: 'ghost',
+                        size: 'lg'
+                      })}
+                    >
+                      <LayoutDashboard className='mr-3 h-5 w-5 ' />
+                      Dashboard
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      href='/dashboard/horario'
+                      className={buttonVariants({
+                        variant: 'ghost',
+                        size: 'lg'
+                      })}
+                    >
+                      <Calendar className='mr-3 h-5 w-5' />
+                      Horario
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link
+                      href='/dashboard/calificaciones'
+                      className={buttonVariants({
+                        variant: 'ghost',
+                        size: 'lg'
+                      })}
+                    >
+                      <GraduationCap className='mr-3 h-5 w-5' />
+                      Calificaciones
+                    </Link>
+                  </SheetClose>
+                </nav>
+              </SheetContent>
+            </Sheet>
             <h1 className='text-2xl font-semibold text-gray-800 dark:text-white'>
               Dashboard
             </h1>
