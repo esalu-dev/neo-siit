@@ -1,14 +1,10 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 type Clase = {
   materia: string
@@ -107,66 +103,80 @@ const horarioSemanal: HorarioDiario = {
 
 export default function HorarioPage () {
   const diasSemana = Object.keys(horarioSemanal)
+  const [diaActual, setDiaActual] = useState(0)
+
+  const cambiarDia = (direccion: number) => {
+    setDiaActual(prevDia => {
+      let nuevoDia = prevDia + direccion
+      if (nuevoDia < 0) nuevoDia = diasSemana.length - 1
+      if (nuevoDia >= diasSemana.length) nuevoDia = 0
+      return nuevoDia
+    })
+  }
 
   return (
     <div className='container mx-auto px-4 py-8'>
-      <Card>
-        <CardHeader>
-          <CardTitle className='text-2xl font-bold text-center'>
-            Horario Semanal
-          </CardTitle>
+      <Card className='mb-6'>
+        <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+          <Button variant='outline' size='icon' onClick={() => cambiarDia(-1)}>
+            <ChevronLeft className='h-4 w-4' />
+          </Button>
+          <CardTitle className='text-xl'>{diasSemana[diaActual]}</CardTitle>
+          <Button variant='outline' size='icon' onClick={() => cambiarDia(1)}>
+            <ChevronRight className='h-4 w-4' />
+          </Button>
         </CardHeader>
         <CardContent>
-          <div className='overflow-x-auto'>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className='text-center'>Hora</TableHead>
-                  {diasSemana.map(dia => (
-                    <TableHead key={dia} className='text-center'>
-                      {dia}
-                    </TableHead>
+          {horarioSemanal[diasSemana[diaActual]].map((clase, index) => (
+            <Card
+              key={index}
+              className='mb-4 last:mb-0 border-l-4 accent-border'
+            >
+              <CardContent className='p-4'>
+                <h3 className='font-bold text-lg mb-2 accent-text'>
+                  {clase.materia}
+                </h3>
+                <p className='text-sm mb-1'>Profesor: {clase.profesor}</p>
+                <p className='text-sm mb-1'>Aula: {clase.aula}</p>
+                <p className='text-sm mb-2'>
+                  Horario: {clase.horaInicio} - {clase.horaFin}
+                </p>
+                <Badge variant='outline' className='accent-text'>
+                  {clase.horaInicio} - {clase.horaFin}
+                </Badge>
+              </CardContent>
+            </Card>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className='text-lg'>Vista Semanal</CardTitle>
+        </CardHeader>
+        <CardContent className='overflow-x-auto'>
+          <div className='min-w-[640px]'>
+            <div className='grid grid-cols-5 gap-2'>
+              {diasSemana.map((dia, index) => (
+                <div key={index} className='text-center'>
+                  <h3 className='font-semibold mb-2'>{dia}</h3>
+                  {horarioSemanal[dia].map((clase, claseIndex) => (
+                    <div
+                      key={claseIndex}
+                      className='bg-accent/10 p-2 rounded-md mb-2 text-xs'
+                    >
+                      <p className='font-semibold accent-text'>
+                        {clase.materia}
+                      </p>
+                      <p>
+                        {clase.horaInicio} - {clase.horaFin}
+                      </p>
+                      <p>{clase.aula}</p>
+                    </div>
                   ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Array.from({ length: 6 }, (_, i) => i + 8).map(hora => (
-                  <TableRow key={hora}>
-                    <TableCell className='font-medium text-center'>
-                      {`${hora.toString().padStart(2, '0')}:00`}
-                    </TableCell>
-                    {diasSemana.map(dia => {
-                      const clase = horarioSemanal[dia].find(
-                        c =>
-                          parseInt(c.horaInicio) <= hora &&
-                          parseInt(c.horaFin) > hora
-                      )
-                      return (
-                        <TableCell
-                          key={`${dia}-${hora}`}
-                          className='text-center'
-                        >
-                          {clase && (
-                            <div className='bg-accent/10 p-2 rounded-md'>
-                              <p className='font-semibold accent-text'>
-                                {clase.materia}
-                              </p>
-                              <p className='text-sm'>{clase.profesor}</p>
-                              <Badge variant='outline' className='mt-1'>
-                                {clase.aula}
-                              </Badge>
-                              <p className='text-xs mt-1'>
-                                {`${clase.horaInicio} - ${clase.horaFin}`}
-                              </p>
-                            </div>
-                          )}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </div>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

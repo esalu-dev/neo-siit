@@ -1,8 +1,22 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import {
+  Anek_Devanagari,
+  Inter,
+  Lato,
+  Montserrat,
+  Nunito_Sans,
+  Onest,
+  Poppins,
+  Raleway
+} from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
+import { cn } from '@/lib/utils'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700']
+})
 
 export const metadata: Metadata = {
   title: 'NeoSIIT | Sistema Integral de Información',
@@ -16,7 +30,22 @@ export default function RootLayout ({
 }>) {
   return (
     <html lang='es'>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cn(
+          'antialiased bg-background text-foreground',
+          inter.className
+        )}
+      >
+        {' '}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

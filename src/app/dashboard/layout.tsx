@@ -1,3 +1,5 @@
+import { NavButton } from '@/components/NavButton'
+import { ThemeButton } from '@/components/ThemeButton'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Sheet,
@@ -14,7 +16,8 @@ import {
   GraduationCap,
   Bell,
   Menu,
-  User
+  User,
+  SquareLibrary
 } from 'lucide-react'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -30,20 +33,18 @@ export default function RootLayout ({
   children: React.ReactNode
 }>) {
   return (
-    <div className='flex min-h-screen bg-gray-100 dark:bg-gray-900'>
+    <div className='flex min-h-screen dark:bg-background bg-gray-100'>
       {/* Sidebar */}
-      <aside className='hidden md:flex flex-col w-64 bg-white dark:bg-gray-800 border-r dark:border-gray-700'>
-        <div className='flex items-center justify-center h-16 border-b dark:border-gray-700'>
-          <span className='text-2xl font-semibold text-gray-800 dark:text-white'>
-            NeoSIIT
-          </span>
+      <aside className='hidden md:flex flex-col w-64 bg-white dark:bg-background border-r '>
+        <div className='flex items-center justify-center h-16 border-b '>
+          <span className='text-2xl font-semibold'>NeoSIIT</span>
         </div>
         <nav className='flex-grow'>
           <ul className='space-y-2 py-4'>
             <li>
               <Link
                 href='/dashboard'
-                className='flex items-center px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+                className='flex items-center px-4 py-2 hover:bg-zinc-200 dark:hover:bg-zinc-700'
               >
                 <LayoutDashboard className='mr-3 h-5 w-5' />
                 Dashboard
@@ -71,7 +72,7 @@ export default function RootLayout ({
         </nav>
       </aside>
       <div className='flex-1 flex flex-col overflow-hidden'>
-        <header className='flex items-center max-h-16 justify-between px-6 py-4 bg-white dark:bg-gray-800 border-b dark:border-gray-700'>
+        <header className='flex items-center max-h-16 justify-between px-6 py-4 bg-background border-b'>
           <div className='flex items-center'>
             <Sheet>
               <SheetTrigger asChild>
@@ -89,42 +90,26 @@ export default function RootLayout ({
                   Sistema Integral de Información
                 </SheetDescription>
                 <nav className='flex flex-col space-y-2 py-4'>
-                  <SheetClose asChild>
-                    <Link
-                      href={'/dashboard'}
-                      className={buttonVariants({
-                        variant: 'ghost',
-                        size: 'lg'
-                      })}
-                    >
-                      <LayoutDashboard className='mr-3 h-5 w-5 ' />
-                      Dashboard
-                    </Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link
-                      href='/dashboard/horario'
-                      className={buttonVariants({
-                        variant: 'ghost',
-                        size: 'lg'
-                      })}
-                    >
-                      <Calendar className='mr-3 h-5 w-5' />
-                      Horario
-                    </Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link
-                      href='/dashboard/calificaciones'
-                      className={buttonVariants({
-                        variant: 'ghost',
-                        size: 'lg'
-                      })}
-                    >
-                      <GraduationCap className='mr-3 h-5 w-5' />
-                      Calificaciones
-                    </Link>
-                  </SheetClose>
+                  <NavButton
+                    title='Dashboard'
+                    href='/dashboard/'
+                    icon={<LayoutDashboard className='mr-3 h-5 w-5' />}
+                  />
+                  <NavButton
+                    title='Horario'
+                    href='/dashboard/horario'
+                    icon={<Calendar className='mr-3 h-5 w-5' />}
+                  />
+                  <NavButton
+                    title='Calificaciones'
+                    href='/dashboard/calificaciones'
+                    icon={<GraduationCap className='mr-3 h-5 w-5' />}
+                  />
+                  <NavButton
+                    title='Avance reticular'
+                    href='/dashboard/avance'
+                    icon={<SquareLibrary className='mr-3 h-5 w-5' />}
+                  />
                 </nav>
               </SheetContent>
             </Sheet>
@@ -133,9 +118,7 @@ export default function RootLayout ({
             </h1>
           </div>
           <div className='flex items-center space-x-4'>
-            <Button variant='ghost' size='icon'>
-              <Bell className='h-5 w-5' />
-            </Button>
+            <ThemeButton />
             <Button variant='ghost' size='icon'>
               <User className='h-5 w-5' />
             </Button>

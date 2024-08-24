@@ -14,7 +14,7 @@ export default function Dashb () {
   return (
     <div>
       {/* Content */}
-      <main className='flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900'>
+      <main className='flex-1 overflow-x-hidden overflow-y-auto'>
         <div className='container mx-auto px-6 py-8'>
           <div className='grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-3'>
             {/* Horario Card */}

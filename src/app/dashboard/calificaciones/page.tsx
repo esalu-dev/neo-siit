@@ -81,13 +81,12 @@ export default function CalificacionesPage () {
     <div className='container mx-auto px-4 py-8'>
       <Card className='mb-8'>
         <CardHeader>
-          <CardTitle className='text-2xl font-bold text-center'>
-            Calificaciones Parciales
+          <CardTitle className='text-xl font-bold text-center'>
+            Promedio general
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className='text-center mb-4'>
-            <h2 className='text-xl font-semibold mb-2'>Promedio General</h2>
             <div className='text-4xl font-bold accent-text'>
               {promedioGeneral}
             </div>
